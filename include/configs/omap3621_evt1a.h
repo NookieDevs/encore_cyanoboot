@@ -204,7 +204,7 @@
 //This can be used as loading address for gas gauge history data
 #define LOAD_ADDRESS		0x81C00000
 
-#define CONFIG_BOOTCOMMAND "run autodetectmmc; run checkforalt; run readtokens; run checkbootcount; run checkrom; run checkupdate; run checkbcb; run ${bootvar}"
+#define CONFIG_BOOTCOMMAND "run autodetectmmc; run checkforalt; run readtokens; run checkbootcount; run checkrom; run checkupdate; run checkbcb; run setbootdevice; run ${bootvar}"
 //#define CONFIG_BOOTARGS "console=ttyS0,115200n8 root=/dev/mmcblk0p2 rw rootdelay=1 mem=256M init=/init"
 #define CONFIG_BOOTARGS ""
 
@@ -392,6 +392,9 @@ if itest.l $? -ne 0 ||\
  mw.b 0x81c00048 0xa 1; mw.b 0x81c00056 0xa 1;\
  fatsave mmc ${mmcromdev}:2 0x81c00000 BCB 0x200;\
 fi" \
+	"\0" \
+\
+"setbootdevice=setenv commonbootargs ${commonbootargs} androidboot.bootdevice=${bootdevice}" \
 	"\0" \
 
 // #define CONFIG_BOOTARGS "console=ttyS0,115200n8 androidboot.console=ttyS0 root=/dev/mmcblk0p2 rw rootdelay=1 mem=512M init=/init videoout=omap24xxvout omap_vout.video1_numbuffers=6 omap_vout.vid1_static_vrfb_alloc=y omapfb.vram=0:5M"
